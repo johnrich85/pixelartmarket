@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'catalog', 'namespace' => 'Modules\Catalog\Http\Controllers'], function()
+Route::group(['prefix' => 'product', 'namespace' => 'Modules\Catalog\Http\Controllers\Product'], function()
 {
-	Route::get('/', 'CatalogController@index');
+	Route::resource('/', 'ProductController@index');
 });
