@@ -150,6 +150,7 @@ return [
 		 */
 		'Pingpong\Modules\ModulesServiceProvider',
 		'Pingpong\Modules\Providers\BootstrapServiceProvider',
+		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 
 	],
 
@@ -204,6 +205,8 @@ return [
 		 */
 
 		'Module' => 'Pingpong\Modules\Facades\Module',
+		'JWTAuth' => 'Tymon\JWTAuth\Facades\JWTAuth',
+		'JWTFactory' => 'Tymon\JWTAuth\Facades\JWTFactory'
 
 	],
 

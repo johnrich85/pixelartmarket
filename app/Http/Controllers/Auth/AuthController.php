@@ -1,38 +1,36 @@
 <?php namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Auth\Registrar;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Http\Traits\RestController;
+use JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Registration & Login Controller
-	|--------------------------------------------------------------------------
-	|
-	| This controller handles the registration of new users, as well as the
-	| authentication of existing users. By default, this controller uses
-	| a simple trait to add these behaviors. Why don't you explore it?
-	|
-	*/
-
-	use AuthenticatesAndRegistersUsers;
+	use RestController;
 
 	/**
-	 * Create a new authentication controller instance.
+	 * Authenticates a user via username/password.
+	 * Returns JWT Token.
 	 *
-	 * @param  \Illuminate\Contracts\Auth\Guard  $auth
-	 * @param  \Illuminate\Contracts\Auth\Registrar  $registrar
-	 * @return void
+	 * @requestType POST
+	 * @route /
+	 * @param Request $request
+	 * @return \Symfony\Component\HttpFoundation\Response
 	 */
-	public function __construct(Guard $auth, Registrar $registrar)
+	public function authenticate(Request $request)
 	{
-		$this->auth = $auth;
-		$this->registrar = $registrar;
+		$credentials = $request->only('email', 'password');
 
-		$this->middleware('guest', ['except' => 'getLogout']);
+		try {
+			if (!$token = JWTAuth::attempt($credentials)) {
+				return $this->unauthorizedResponse(['error' => 'invalid_credentials']);
+			}
+		} catch (JWTException $e) {
+			return response()->json(['error' => 'could_not_create_token'], 500);
+		}
+
+		return $this->showResponse(compact('token'));
 	}
-
 }

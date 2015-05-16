@@ -13,3 +13,11 @@
 
 - Module tests can be ran separately via "phpunit --configuration module-test.xml"
 
+
+## TO DO
+
+- Write tests for authentication.
+- Data modelling for products.
+- Set up production site.
+- Set up automated deployment.
+

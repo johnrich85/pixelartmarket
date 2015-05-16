@@ -44,6 +44,16 @@ trait RestController
         return response()->json($response, $response['code']);
     }
 
+    protected function unauthorizedResponse($data)
+    {
+        $response = [
+            'code' => 401,
+            'status' => 'error',
+            'data' => $data,
+        ];
+        return response()->json($response, $response['code']);
+    }
+
     protected function deletedResponse()
     {
         $response = [
