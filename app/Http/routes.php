@@ -13,5 +13,5 @@
 
 Route::group(['prefix' => '1.0'], function()
 {
-	Route::get('auth', 'Auth\AuthController@authenticate');
+	Route::post('auth', 'Auth\AuthController@authenticate');
 });
