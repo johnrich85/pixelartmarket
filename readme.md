@@ -17,6 +17,7 @@
 ## TO DO
 
 - Write tests for authentication.
+- Move foreign keys into separate migrations.
 - Data modelling for products.
 - Set up production site.
 - Set up automated deployment.
