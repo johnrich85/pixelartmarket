@@ -12,10 +12,11 @@ class CreateProductTypeOption extends Migration {
      */
     public function up()
     {
-        Schema::create('', function(Blueprint $table)
+        Schema::create('product_type_option', function(Blueprint $table)
         {
             $table->increments('id');
             $table->string('name');
+
             $table->timestamps();
         });
     }
@@ -27,7 +28,7 @@ class CreateProductTypeOption extends Migration {
      */
     public function down()
     {
-        Schema::drop('');
+        Schema::drop('product_type_option');
     }
 
 }

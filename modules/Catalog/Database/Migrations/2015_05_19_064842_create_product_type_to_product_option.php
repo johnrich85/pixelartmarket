@@ -12,15 +12,12 @@ class CreateProductTypeToProductOption extends Migration {
      */
     public function up()
     {
-        Schema::create('', function(Blueprint $table)
+        Schema::create('product_type_to_product_option', function(Blueprint $table)
         {
             $table->increments('id');
             $table->integer('product_type_id');
             $table->integer('product_type_option_id');
             $table->timestamps();
-
-            $table->foreign('product_type_id')->references('id')->on('product_type');
-            $table->foreign('product_type_option_id')->references('id')->on('product_type_option');
         });
     }
 
@@ -31,7 +28,7 @@ class CreateProductTypeToProductOption extends Migration {
      */
     public function down()
     {
-        Schema::drop('');
+        Schema::drop('product_type_to_product_option');
     }
 
 }

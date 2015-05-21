@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductOptionValues extends Migration {
+class CreateProductCategory extends Migration {
 
     /**
      * Run the migrations.
@@ -12,12 +12,13 @@ class CreateProductOptionValues extends Migration {
      */
     public function up()
     {
-        Schema::create('product_option_values', function(Blueprint $table)
+        Schema::create('product_category', function(Blueprint $table)
         {
             $table->increments('id');
+
             $table->integer('product_id');
-            $table->integer('product_type_option_id');
-            $table->longText('value');
+            $table->integer('category_id');
+
             $table->timestamps();
         });
     }
@@ -29,7 +30,7 @@ class CreateProductOptionValues extends Migration {
      */
     public function down()
     {
-        Schema::drop('product_option_values');
+        Schema::drop('');
     }
 
 }

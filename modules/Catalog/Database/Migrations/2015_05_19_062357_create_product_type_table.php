@@ -17,7 +17,6 @@ class CreateProductTypeTable extends Migration {
             $table->increments('id');
             $table->string('name');
 
-            $table->foreign('id')->references('product_type_id')->on('product_type_to_product_type_option');
             $table->timestamps();
         });
     }
