@@ -17,8 +17,21 @@ class CatalogServiceProvider extends ServiceProvider {
 	 * @return void
 	 */
 	public function register()
-	{		
+	{
+		$this->bindInterfaces();
+
 		$this->registerConfig();
+	}
+
+	/**
+	 * Ties an interface to an implementation for
+	 * the purpose of the IoC Container.
+	 */
+	protected function bindInterfaces() {
+		$this->app->bind(
+			'Modules\Catalog\Repositories\Contract\ProductRepositoryInterface',
+			'Modules\Catalog\Repositories\ProductRepository'
+		);
 	}
 
 	/**

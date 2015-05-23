@@ -2,7 +2,7 @@
 
 use Pingpong\Modules\Routing\Controller;
 use App\Http\Traits\RestController;
-use Modules\Catalog\Entities\Product;
+use Modules\Catalog\Repositories\Contract\ProductRepositoryInterface;
 use Illuminate\Support\Facades\Input;
 
 class ProductController extends Controller {
@@ -10,14 +10,24 @@ class ProductController extends Controller {
 	use RestController;
 
 	/**
+	 * @var ProductRepositoryInterface
+	 */
+	protected $productRepo;
+
+	public function __construct(ProductRepositoryInterface $productRepo) {
+		$this->productRepo = $productRepo;
+	}
+
+	/**
 	 * @requestType GET
 	 * @route /
 	 */
 	public function index() {
-		$model = new Product();
-		$product = $model->find(1);
+		$products = $this->productRepo->all();
+		$products = $products->toArray();
 
-		return $this->showResponse($product->toArray());
+		$this->jsonPrettyPrint(true);
+		return $this->listResponse($products);
 	}
 
 	/**

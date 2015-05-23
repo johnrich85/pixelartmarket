@@ -35,7 +35,7 @@ trait RestController
             'status' => 'success',
             'data' => $data
         ];
-        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
+        return Response::json($response, $response['code'], array(), $this->jsonPrettyPrint);
     }
 
     /**
@@ -50,7 +50,7 @@ trait RestController
             'data' => $data
         ];
 
-        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
+        return Response::json($response, $response['code'], array(), $this->jsonPrettyPrint);
     }
 
     /**
@@ -65,7 +65,7 @@ trait RestController
             'data' => $data
         ];
 
-        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
+        return Response::json($response, $response['code'], array(), $this->jsonPrettyPrint);
     }
 
     /**
@@ -80,7 +80,7 @@ trait RestController
             'message' => 'Not Found'
         ];
 
-        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
+        return Response::json($response, $response['code'], array(), $this->jsonPrettyPrint);
     }
 
     /**
@@ -95,7 +95,7 @@ trait RestController
             'data' => $data,
         ];
 
-        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
+        return Response::json($response, $response['code'], array(), $this->jsonPrettyPrint);
     }
 
     /**
@@ -110,7 +110,7 @@ trait RestController
             'message' => 'Resource deleted'
         ];
 
-        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
+        return Response::json($response, $response['code'], array(), $this->jsonPrettyPrint);
     }
 
     /**
@@ -126,7 +126,7 @@ trait RestController
             'message' => 'Unprocessable entity'
         ];
 
-        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
+        return Response::json($response, $response['code'], array(), $this->jsonPrettyPrint);
     }
 
 }
