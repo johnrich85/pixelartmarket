@@ -22,3 +22,25 @@
 - Set up production site.
 - Set up automated deployment.
 
+## Notes
+ - Need to support query string params
+
+Sort:
+?sort=-priority,created_at
+
+Filtering:
+?field=value
+
+Search (lucene?):
+?q=search term
+
+Field selection:
+?fields=id,name, description
+
+Pretty print:
+?pretty=true
+
+Aliases for common queries:
+
+To make the API experience more pleasant, consider packaging up sets of conditions into easily accessible RESTful paths. e.g products/recently_created
+

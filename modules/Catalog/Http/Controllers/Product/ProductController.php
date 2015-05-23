@@ -2,6 +2,8 @@
 
 use Pingpong\Modules\Routing\Controller;
 use App\Http\Traits\RestController;
+use Modules\Catalog\Entities\Product;
+use Illuminate\Support\Facades\Input;
 
 class ProductController extends Controller {
 
@@ -12,7 +14,10 @@ class ProductController extends Controller {
 	 * @route /
 	 */
 	public function index() {
-		//return $this->createdResponse(array('test'));
+		$model = new Product();
+		$product = $model->find(1);
+
+		return $this->showResponse($product->toArray());
 	}
 
 	/**

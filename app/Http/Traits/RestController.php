@@ -1,38 +1,76 @@
 <?php
+
 namespace App\Http\Traits;
+
+use Illuminate\Support\Facades\Response;
 
 trait RestController
 {
+
+    protected $jsonPrettyPrint = 0;
+
+    /**
+     * Given a value other than false, enables
+     * json pretty print.
+     *
+     * @param $enable Boolean
+     */
+    protected function jsonPrettyPrint($enable) {
+        if($enable == false) {
+            $this->jsonPrettyPrint = 0;
+            return;
+        }
+
+        $this->jsonPrettyPrint = JSON_PRETTY_PRINT;
+    }
+
+    /**
+     * @param $data
+     * @return mixed
+     */
     protected function createdResponse($data)
     {
         $response = [
             'code' => 201,
-            'status' => 'succcess',
+            'status' => 'success',
             'data' => $data
         ];
-        return response()->json($response, $response['code']);
+        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     protected function showResponse($data)
     {
         $response = [
             'code' => 200,
-            'status' => 'succcess',
+            'status' => 'success',
             'data' => $data
         ];
-        return response()->json($response, $response['code']);
+
+        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     protected function listResponse($data)
     {
         $response = [
             'code' => 200,
-            'status' => 'succcess',
+            'status' => 'success',
             'data' => $data
         ];
-        return response()->json($response, $response['code']);
+
+        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
     }
 
+    /**
+     * @return mixed
+     */
     protected function notFoundResponse()
     {
         $response = [
@@ -41,9 +79,14 @@ trait RestController
             'data' => 'Resource Not Found',
             'message' => 'Not Found'
         ];
-        return response()->json($response, $response['code']);
+
+        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     protected function unauthorizedResponse($data)
     {
         $response = [
@@ -51,9 +94,13 @@ trait RestController
             'status' => 'error',
             'data' => $data,
         ];
-        return response()->json($response, $response['code']);
+
+        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
     }
 
+    /**
+     * @return mixed
+     */
     protected function deletedResponse()
     {
         $response = [
@@ -62,9 +109,14 @@ trait RestController
             'data' => [],
             'message' => 'Resource deleted'
         ];
-        return response()->json($response, $response['code']);
+
+        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
     }
 
+    /**
+     * @param $data
+     * @return mixed
+     */
     protected function clientErrorResponse($data)
     {
         $response = [
@@ -73,7 +125,8 @@ trait RestController
             'data' => $data,
             'message' => 'Unprocessable entity'
         ];
-        return response()->json($response, $response['code']);
+
+        return Response::json($response, $response['code'], array(), JSON_PRETTY_PRINT);
     }
 
 }
