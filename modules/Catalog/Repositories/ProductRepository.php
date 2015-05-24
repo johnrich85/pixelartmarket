@@ -19,7 +19,7 @@ class ProductRepository implements ProductRepositoryInterface{
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function all($columns = array('*')) {
-        return $this->model->all($columns);
+        return $this->model->with('productType')->get($columns);
     }
 
     public function find($id,$columns = array('*')) {

@@ -16,6 +16,10 @@ class ProductController extends Controller {
 
 	public function __construct(ProductRepositoryInterface $productRepo) {
 		$this->productRepo = $productRepo;
+
+		if(Input::get('pretty') == true) {
+			$this->jsonPrettyPrint(true);
+		}
 	}
 
 	/**
@@ -23,10 +27,8 @@ class ProductController extends Controller {
 	 * @route /
 	 */
 	public function index() {
-		$products = $this->productRepo->all();
-		$products = $products->toArray();
+		$products = $this->productRepo->all()->toArray();
 
-		$this->jsonPrettyPrint(true);
 		return $this->listResponse($products);
 	}
 

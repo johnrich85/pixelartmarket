@@ -11,11 +11,12 @@
 
 ## Tests
 
-- Module tests can be ran separately via "phpunit --configuration module-test.xml"
+- Module tests can be ran separately via "s"
 
 
 ## TO DO
-
+- Change testing strategy for repos... use sql lite db along with seeders. (Integration rather than
+- unit tests) @See - https://github.com/laracasts/TestDummy
 - Write tests for authentication.
 - Move foreign keys into separate migrations.
 - Data modelling for products.
