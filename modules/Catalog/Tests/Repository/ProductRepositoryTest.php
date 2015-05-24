@@ -1,31 +1,37 @@
 <?php
 
-use Pingpong\Testing\TestCase;
 use Modules\Catalog\Repositories\ProductRepository;
+use Modules\Catalog\Entities\Product;
+use Laracasts\TestDummy\Factory;
+use Laracasts\TestDummy\DbTestCase;
 
-class ProductRepositoryTest extends TestCase {
+class ProductRepositoryTest extends DbTestCase  {
+
+    public function setUp() {
+        parent::setUp();
+        Artisan::call('module:migrate');
+        Factory::times(3)->create('Modules\Catalog\Entities\Product');
+    }
 
     public function getBasePath() {
         return realpath(__DIR__.'/../../../../');
     }
 
     public function testAll() {
-        $args = array('name');
 
-        $Entity = Mockery::mock('Modules\Catalog\Entities\Product[all]', array($args))
-            ->shouldReceive('all')
-            ->andReturn(new \Illuminate\Database\Eloquent\Collection())
-            ->once();
+        $this->repo = new ProductRepository(new Product());
 
-        $this->repo = new ProductRepository($Entity->getMock());
-
-        $data = $this->repo->all($args);
+        $data = $this->repo->all();
 
         $this->assertInstanceOf('\Illuminate\Database\Eloquent\Collection', $data);
+        $this->assertEquals(3, count($data));
     }
 
+    /**
+     * Rollback transactions after each test.
+     */
     public function tearDown()
     {
-        Mockery::close();
+        parent::tearDown();
     }
 }

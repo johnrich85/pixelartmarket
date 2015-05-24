@@ -1,16 +1,17 @@
 <?php
 
-use Pingpong\Testing\TestCase;
+use Laracasts\TestDummy\Factory;
+use Laracasts\TestDummy\DbTestCase;
 
-class ProductControllerTest extends TestCase {
+class ProductControllerTest extends DbTestCase {
+
+    public function setUp() {
+        parent::setUp();
+        Artisan::call('module:migrate');
+        Factory::times(3)->create('Modules\Catalog\Entities\Product');
+    }
 
     public function testIndex() {
-        $args = array('*');
-        $Entity = Mockery::mock('Modules\Catalog\Entities\Product[all]', array($args))
-            ->shouldReceive('all')
-            ->andReturn(new \Illuminate\Database\Eloquent\Collection())
-            ->once();
-        $this->app->instance('Modules\Catalog\Entities\Product', $Entity->getMock());
 
         $response = $this->call("GET", "1.0/product");
         $content = $response->getContent();
@@ -24,8 +25,4 @@ class ProductControllerTest extends TestCase {
         return realpath(__DIR__.'/../../../../');
     }
 
-    public function tearDown()
-    {
-        Mockery::close();
-    }
 }
