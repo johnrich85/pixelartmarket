@@ -21,16 +21,26 @@
 - Set up production site.
 - Set up automated deployment.
 
+Query string parser
+
+- New class, config driven "ApiParameterBuilder". Config defines which params map to which class
+- New factory class to instantiate:
+ - QSParam (base)
+ - sort -> returns array("name"=>"fieldname", order="ASC")
+ - field_name -> returns array('name', 'value')... where()->orWhere()
+ - q -> returns array('searchterm1', 'searchterm2')
+ - fields => returns ('field1', 'field2', 'field3')
+
 ## Notes
  - Need to support query string params
 
 Sort:
 ?sort=-priority,created_at
 
-Filtering:
-?field=value
+Field Filter:
+?field_fieldName=value
 
-Search (lucene?):
+General Search (lucene?):
 ?q=search term
 
 Field selection:
