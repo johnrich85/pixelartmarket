@@ -151,6 +151,7 @@ return [
 		'Pingpong\Modules\ModulesServiceProvider',
 		'Pingpong\Modules\Providers\BootstrapServiceProvider',
 		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+		'Illuminate\Workbench\WorkbenchServiceProvider'
 
 	],
 

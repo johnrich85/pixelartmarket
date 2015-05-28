@@ -2,7 +2,7 @@
 
 use Modules\Catalog\Entities\Product;
 use Modules\Catalog\Repositories\Contract\ProductRepositoryInterface;
-
+use Illuminate\Support\Facades\DB;
 class ProductRepository implements ProductRepositoryInterface{
 
     protected $model;
@@ -19,7 +19,24 @@ class ProductRepository implements ProductRepositoryInterface{
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
     public function all($columns = array('*')) {
-        return $this->model->with('productType')->get($columns);
+        $query = $this->model->with('productType');
+
+        //$test = new \Johnrich85\EloquentQueryModifier\EloquentQueryModifier();
+
+
+        //$query = $ApiQueryModifier->addParameters($query, $input);
+
+        $query->where('name', 'Test Product');
+        $query->orWhere('name', 'Test Product 2');
+
+        var_dump($query->getQuery()->getBindings());
+          die();
+
+        $query->orderBy('id', 'DESC');
+
+        $results = $query->get($columns);
+
+        return $results;
     }
 
     public function find($id,$columns = array('*')) {
