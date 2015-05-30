@@ -31,6 +31,17 @@ Query string parser
  - q -> returns array('searchterm1', 'searchterm2')
  - fields => returns ('field1', 'field2', 'field3')
 
+ ##TO DO
+ - Handle exceptions
+ - Master class currently instantiating dependencies, use factory instead?
+ - Add sort modifier - DONE
+ - Create FilterModifier - DONE
+ - Create FieldSelectionModifier - DONE
+ - Add list of modifiers to config - iterate over, instantiate and use. (makes it possible
+ to add modifiers without updating EQM class)
+ - Unit tests
+
+
 ## Notes
  - Need to support query string params
 

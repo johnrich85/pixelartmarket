@@ -1,40 +1,41 @@
 <?php namespace Modules\Catalog\Repositories;
 
+use Mockery\CountValidator\Exception;
 use Modules\Catalog\Entities\Product;
 use Modules\Catalog\Repositories\Contract\ProductRepositoryInterface;
 use Illuminate\Support\Facades\DB;
+use Johnrich85\EloquentQueryModifier\EloquentQueryModifier;
+
 class ProductRepository implements ProductRepositoryInterface{
 
     protected $model;
+    protected $modifier;
 
     /**
      * @param Product $model
      */
-    public function __construct(Product $model) {
+    public function __construct(Product $model, EloquentQueryModifier $modifier) {
         $this->model = $model;
+        $this->modifier = $modifier;
     }
 
     /**
      * @param array $columns
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function all($columns = array('*')) {
+    public function all($params = array()) {
         $query = $this->model->with('productType');
 
-        //$test = new \Johnrich85\EloquentQueryModifier\EloquentQueryModifier();
+        try {
+            $this->modifier->modify($query, $params);
+        }
+        catch(Exception $e) {
+            return false;
+        }
 
-
-        //$query = $ApiQueryModifier->addParameters($query, $input);
-
-        $query->where('name', 'Test Product');
-        $query->orWhere('name', 'Test Product 2');
-
-        var_dump($query->getQuery()->getBindings());
-          die();
-
-        $query->orderBy('id', 'DESC');
-
-        $results = $query->get($columns);
+        $results = $query->get();
+        var_dump($results->toArray());
+        die();
 
         return $results;
     }

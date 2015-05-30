@@ -17,6 +17,9 @@ class EloquentQueryModifier implements QueryModifier {
      */
     protected $builder;
 
+    /**
+     * @param InputConfig $config
+     */
     public function __construct(InputConfig $config) {
         $this->config = $config;
     }
@@ -25,10 +28,11 @@ class EloquentQueryModifier implements QueryModifier {
 
         $this->input = $input;
         $this->builder = $builder;
-
         $this->setConfigFilterableFields($builder);
 
         $this->builder = $this->addWhereFilters();
+        $this->builder = $this->addSorting();
+        $this->builder = $this->addFieldSelection();
 
     }
 
@@ -46,26 +50,24 @@ class EloquentQueryModifier implements QueryModifier {
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function addWhereFilters() {
-        $fields = $this->config->getFilterableFields();
+        $modifier = new Modifiers\FilterModifier($this->input, $this->builder, $this->config);
+        return $this->builder = $modifier->modify();
+    }
 
-        if(count($fields) == 0) {
-            return $this->builder;
-        }
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function addSorting() {
+        $modifier = new Modifiers\SortModifier($this->input, $this->builder, $this->config);
+        return $this->builder = $modifier->modify();
+    }
 
-        $fieldsAdded = 0;
-
-        foreach($fields as $field) {
-            if(empty($this->input[$field])) continue;
-
-            if($fieldsAdded > 0) {
-                $this->builder = $this->builder->orWhere($field, $this->input[$field]);
-            }else {
-                $this->builder = $this->builder->where($field, $this->input[$field]);
-            }
-            $fieldsAdded++;
-        }
-
-        return $this->builder;
+    /**
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    protected function addFieldSelection() {
+        $modifier = new Modifiers\FieldSelectionModifier($this->input, $this->builder, $this->config);
+        return $this->builder = $modifier->modify();
     }
 
     /**

@@ -27,8 +27,8 @@ class ProductController extends Controller {
 	 * @route /
 	 */
 	public function index() {
-		$products = $this->productRepo->all()->toArray();
-
+		$products = $this->productRepo->all(Input::all())->toArray();
+		var_dump(Input::all());die();
 		return $this->listResponse($products);
 	}
 
