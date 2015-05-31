@@ -1,5 +1,7 @@
 <?php namespace Johnrich85\EloquentQueryModifier;
 
+use Johnrich85\EloquentQueryModifier\Factory\ModifierFactory;
+
 class EloquentQueryModifier implements QueryModifier {
 
     /**
@@ -18,22 +20,53 @@ class EloquentQueryModifier implements QueryModifier {
     protected $builder;
 
     /**
+     * @var \Johnrich85\EloquentQueryModifier\Factory
+     */
+    protected $factory;
+
+    /**
      * @param InputConfig $config
      */
-    public function __construct(InputConfig $config) {
+    public function __construct(InputConfig $config, ModifierFactory $factory) {
         $this->config = $config;
+        $this->factory = $factory;
     }
 
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder $builder
+     * @param array $input
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function modify(\Illuminate\Database\Eloquent\Builder $builder, array $input) {
-
         $this->input = $input;
         $this->builder = $builder;
+
         $this->setConfigFilterableFields($builder);
 
-        $this->builder = $this->addWhereFilters();
-        $this->builder = $this->addSorting();
-        $this->builder = $this->addFieldSelection();
+        $this->callModifiers($this->config->getModifiers());
 
+        return $this->builder;
+    }
+
+    /**
+     * Gets a list of modifier names from
+     * config, iterates over and instantiates
+     * objects.
+     *
+     * @param array $modifiers
+     */
+    protected function callModifiers(array $modifiers) {
+
+        $context = array(
+            'input' => $this->input,
+            'builder' => $this->builder,
+            'config' => $this->config
+        );
+
+        foreach($modifiers as $modifier) {
+            $instance = $this->factory->getInstance($modifier, $context);
+            $this->builder = $instance->modify();
+        }
     }
 
     /**
@@ -44,30 +77,6 @@ class EloquentQueryModifier implements QueryModifier {
      */
     protected function setConfigFilterableFields(\Illuminate\Database\Eloquent\Builder $builder) {
         $this->config->setFilterableFields($builder);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function addWhereFilters() {
-        $modifier = new Modifiers\FilterModifier($this->input, $this->builder, $this->config);
-        return $this->builder = $modifier->modify();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function addSorting() {
-        $modifier = new Modifiers\SortModifier($this->input, $this->builder, $this->config);
-        return $this->builder = $modifier->modify();
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function addFieldSelection() {
-        $modifier = new Modifiers\FieldSelectionModifier($this->input, $this->builder, $this->config);
-        return $this->builder = $modifier->modify();
     }
 
     /**

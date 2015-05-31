@@ -30,14 +30,11 @@ class ProductRepository implements ProductRepositoryInterface{
             $this->modifier->modify($query, $params);
         }
         catch(Exception $e) {
+            //TODO - handle exception
             return false;
         }
 
-        $results = $query->get();
-        var_dump($results->toArray());
-        die();
-
-        return $results;
+        return $query->get();
     }
 
     public function find($id,$columns = array('*')) {

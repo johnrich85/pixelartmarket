@@ -34,6 +34,17 @@ class InputConfig {
     protected $limit = 'limit';
 
     /**
+     * List of supported modifier objects.
+     *
+     * @var array
+     */
+    protected $modifiers = array(
+        '\Johnrich85\EloquentQueryModifier\Modifiers\FieldSelectionModifier',
+        '\Johnrich85\EloquentQueryModifier\Modifiers\FilterModifier',
+        '\Johnrich85\EloquentQueryModifier\Modifiers\SortModifier'
+    );
+
+    /**
      * @return string
      */
     public function getSort()
@@ -87,6 +98,20 @@ class InputConfig {
     public function getFilterableFields()
     {
         return $this->filterableFields;
+    }
+
+    /**
+     * @return array
+     */
+    public function getModifiers() {
+        return $this->modifiers;
+    }
+
+    /**
+     * @param $modifierName
+     */
+    public function addModifier($modifierName) {
+        $this->modifiers[] = $modifierName;
     }
 
     /**

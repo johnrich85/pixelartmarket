@@ -33,12 +33,13 @@ Query string parser
 
  ##TO DO
  - Handle exceptions
- - Master class currently instantiating dependencies, use factory instead?
+ - Master class currently instantiating dependencies, use factory instead?  - DONE
  - Add sort modifier - DONE
  - Create FilterModifier - DONE
  - Create FieldSelectionModifier - DONE
  - Add list of modifiers to config - iterate over, instantiate and use. (makes it possible
- to add modifiers without updating EQM class)
+ to add modifiers without updating EQM class)  - DONE
+ - Rename the library (query modifier doesn't communicate the purpose)
  - Unit tests
 
 
