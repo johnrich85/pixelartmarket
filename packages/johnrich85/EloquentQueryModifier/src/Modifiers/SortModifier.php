@@ -109,7 +109,3 @@ class SortModifier extends BaseModifier {
         return $this->builder;
     }
 }
-
-interface QueryBuilderModifier {
-    public function modify();
-}

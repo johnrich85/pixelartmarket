@@ -34,6 +34,13 @@ class InputConfig {
     protected $limit = 'limit';
 
     /**
+     * The name of the page parameter.
+     *
+     * @var string
+     */
+    protected $page = 'page';
+
+    /**
      * List of supported modifier objects.
      *
      * @var array
@@ -41,8 +48,26 @@ class InputConfig {
     protected $modifiers = array(
         '\Johnrich85\EloquentQueryModifier\Modifiers\FieldSelectionModifier',
         '\Johnrich85\EloquentQueryModifier\Modifiers\FilterModifier',
-        '\Johnrich85\EloquentQueryModifier\Modifiers\SortModifier'
+        '\Johnrich85\EloquentQueryModifier\Modifiers\SortModifier',
+        '\Johnrich85\EloquentQueryModifier\Modifiers\PagingModifier'
     );
+
+    /**
+     * @return string
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * @param string $page
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+    }
+
 
     /**
      * @return string

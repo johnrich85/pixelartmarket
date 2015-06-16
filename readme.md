@@ -21,17 +21,8 @@
 - Set up production site.
 - Set up automated deployment.
 
-Query string parser
 
-- New class, config driven "ApiParameterBuilder". Config defines which params map to which class
-- New factory class to instantiate:
- - QSParam (base)
- - sort -> returns array("name"=>"fieldname", order="ASC")
- - field_name -> returns array('name', 'value')... where()->orWhere()
- - q -> returns array('searchterm1', 'searchterm2')
- - fields => returns ('field1', 'field2', 'field3')
-
- ##TO DO
+ ##TO DO (query string processor pacakge)
  - Handle exceptions
  - Master class currently instantiating dependencies, use factory instead?  - DONE
  - Add sort modifier - DONE
@@ -40,26 +31,8 @@ Query string parser
  - Add list of modifiers to config - iterate over, instantiate and use. (makes it possible
  to add modifiers without updating EQM class)  - DONE
  - Rename the library (query modifier doesn't communicate the purpose)
+ - Need to add page/per page param handlers - DONE
  - Unit tests
-
-
-## Notes
- - Need to support query string params
-
-Sort:
-?sort=-priority,created_at
-
-Field Filter:
-?field_fieldName=value
-
-General Search (lucene?):
-?q=search term
-
-Field selection:
-?fields=id,name, description
-
-Pretty print:
-?pretty=true
 
 Aliases for common queries:
 

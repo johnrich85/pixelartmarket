@@ -67,6 +67,7 @@ class EloquentQueryModifier implements QueryModifier {
             $instance = $this->factory->getInstance($modifier, $context);
             $this->builder = $instance->modify();
         }
+
     }
 
     /**
