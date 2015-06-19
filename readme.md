@@ -11,15 +11,17 @@
 
 ## Tests
 
-- Module tests can be ran separately via "s"
+- Module tests can be ran separately via "phpunit --configuration module-test.xml"
 
 
 ## TO DO
 - Write tests for authentication.
 - Move foreign keys into separate migrations.
-- Data modelling for products.
+- Data modelling for products & finish api.
+- Data modelling for categories, using nested set pattern.
 - Set up production site.
 - Set up automated deployment.
+- Add easily accessible RESTful paths. e.g products/recently_created
 
 
  ##TO DO (query string processor pacakge)
@@ -33,8 +35,4 @@
  - Rename the library (query modifier doesn't communicate the purpose)
  - Need to add page/per page param handlers - DONE
  - Unit tests
-
-Aliases for common queries:
-
-To make the API experience more pleasant, consider packaging up sets of conditions into easily accessible RESTful paths. e.g products/recently_created
 

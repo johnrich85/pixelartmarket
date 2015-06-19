@@ -21,8 +21,7 @@ class FieldSelectionModifier extends BaseModifier {
 
         $this->checkForInvalidFields($fields);
 
-        $this->builder->select($fields);
-
+        return $this->builder->select($fields);
     }
 
     /**
@@ -40,6 +39,8 @@ class FieldSelectionModifier extends BaseModifier {
                 $this->throwInvalidFieldException($field);
             }
         }
+
+        return false;
     }
 
     /**
