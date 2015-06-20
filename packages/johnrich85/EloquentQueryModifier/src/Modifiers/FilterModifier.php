@@ -14,7 +14,7 @@ class FilterModifier extends BaseModifier {
     public function modify() {
         $fields = $this->getFilterableFields();
 
-        if($fields == false) {
+        if($fields === false) {
             return $this->builder;
         }else if($fields == '') {
             $this->throwNoDataException();
@@ -60,7 +60,7 @@ class FilterModifier extends BaseModifier {
      * @param $value String
      */
     protected function addWhereFilter($field, $value) {
-        if($this->filterType = 'orWhere') {
+        if($this->filterType == 'orWhere') {
             $this->builder = $this->builder->orWhere($field, $value);
         }else {
             $this->builder = $this->builder->where($field, $value);
@@ -79,6 +79,22 @@ class FilterModifier extends BaseModifier {
         foreach($data as $fieldValue) {
             $this->addWhereFilter($field, $fieldValue);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilterType()
+    {
+        return $this->filterType;
+    }
+
+    /**
+     * @param string $filterType
+     */
+    public function setFilterType($filterType)
+    {
+        $this->filterType = $filterType;
     }
 
 }

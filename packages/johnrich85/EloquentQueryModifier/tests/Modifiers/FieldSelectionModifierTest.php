@@ -1,14 +1,10 @@
 <?php ;
-use Laracasts\TestDummy\Factory;
-use Laracasts\TestDummy\DbTestCase;
 use Johnrich85\EloquentQueryModifier\Modifiers\FieldSelectionModifier;
 use Illuminate\Support\Facades\DB;
 
-class FieldSelectionModifierTest extends DbTestCase {
+class FieldSelectionModifierTest extends Johnrich85\Tests\BaseTest {
 
-    protected $config;
-    protected $builder;
-    protected $data;
+    protected $testClass = '\Johnrich85\EloquentQueryModifier\Modifiers\FieldSelectionModifier';
 
     public function testCheckForInvalidFields() {
         $modifier = $this->_getInstance();
@@ -25,7 +21,7 @@ class FieldSelectionModifierTest extends DbTestCase {
             'name',
             'description'
         );
-        $method = self::getMethod('checkForInvalidFields');
+        $method = $this->getMethod('checkForInvalidFields');
         $result = $method->invokeArgs($modifier, array($fields));
 
         $this->assertEquals(false, $result);
@@ -49,7 +45,7 @@ class FieldSelectionModifierTest extends DbTestCase {
 
         $this->setExpectedException('Exception');
 
-        $method = self::getMethod('checkForInvalidFields');
+        $method = $this->getMethod('checkForInvalidFields');
         $method->invokeArgs($modifier, array($fields));
     }
 
@@ -60,7 +56,7 @@ class FieldSelectionModifierTest extends DbTestCase {
             ->method('getFields')
             ->will($this->returnValue('fields'));
 
-        $method = self::getMethod('fetchValuesFromData');
+        $method = $this->getMethod('fetchValuesFromData');
         $result = $method->invokeArgs($modifier, array());
 
         $this->assertEquals('name, description' ,$result);
@@ -73,7 +69,7 @@ class FieldSelectionModifierTest extends DbTestCase {
             ->method('getFields')
             ->will($this->returnValue('non_existent_index'));
 
-        $method = self::getMethod('fetchValuesFromData');
+        $method = $this->getMethod('fetchValuesFromData');
         $result = $method->invokeArgs($modifier, array());
 
         $this->assertEquals(false ,$result);
@@ -100,7 +96,7 @@ class FieldSelectionModifierTest extends DbTestCase {
             ->with($this->equalTo('select'),$this->anything())
             ->will($this->returnValue(true));
 
-        $method = self::getMethod('modify');
+        $method = $this->getMethod('modify');
         $method->invokeArgs($modifier, array());
     }
 
@@ -115,28 +111,5 @@ class FieldSelectionModifierTest extends DbTestCase {
 
 
         return new FieldSelectionModifier($this->data, $this->builder, $this->config);
-    }
-
-    protected static function getMethod($name) {
-        $class = new ReflectionClass('\Johnrich85\EloquentQueryModifier\Modifiers\FieldSelectionModifier');
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-        return $method;
-    }
-
-    public function setUp() {
-        parent::setUp();
-    }
-
-    public function getBasePath() {
-        return realpath(__DIR__.'/../../../../');
-    }
-
-    /**
-     * Rollback transactions after each test.
-     */
-    public function tearDown() {
-        \Mockery::close();
-        parent::tearDown();
     }
 }
