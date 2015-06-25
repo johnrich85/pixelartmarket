@@ -10,29 +10,25 @@
 - Run module migrations via artisan (php artisan module:migrate, see http://sky.pingpong-labs.com/docs/2.0/testing#example-usage)
 
 ## Tests
-
+- Need to install SQLITE drivers for package tests (sudo apt-get install php5-sqlite)
 - Module tests can be ran separately via "phpunit --configuration module-test.xml"
 
 
 ## TO DO
 - Write tests for authentication.
-- Move foreign keys into separate migrations.
-- Data modelling for products & finish api.
+- Data modelling for products & finish products controller.
 - Data modelling for categories, using nested set pattern.
 - Set up production site.
 - Set up automated deployment.
 - Add easily accessible RESTful paths. e.g products/recently_created
 
 
- ##TO DO (query string processor pacakge)
+ ##TO DO (query string processor package)
  - Handle exceptions
- - Master class currently instantiating dependencies, use factory instead?  - DONE
- - Add sort modifier - DONE
- - Create FilterModifier - DONE
- - Create FieldSelectionModifier - DONE
- - Add list of modifiers to config - iterate over, instantiate and use. (makes it possible
- to add modifiers without updating EQM class)  - DONE
  - Rename the library (query modifier doesn't communicate the purpose)
- - Need to add page/per page param handlers - DONE
- - Unit tests
+ - Outstanding Unit tests:
+   - Base class?
+   - Sort modifier
+   - Input config
+   - EloquentQueryModifier
 
