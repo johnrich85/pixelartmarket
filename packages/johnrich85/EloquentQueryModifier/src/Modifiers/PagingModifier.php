@@ -27,6 +27,7 @@ class PagingModifier extends BaseModifier {
             return $this->builder;
         }
         else if($this->pageNum == '') {
+
             $this->throwNoDataException();
         }
 
@@ -37,6 +38,11 @@ class PagingModifier extends BaseModifier {
      * @return mixed
      */
     protected function addPagingToQueryBuilder() {
+
+        if($this->pageNum < 1) {
+            $this->pageNum = 1;
+        }
+
         $offset = ($this->pageNum - 1) * $this->perPage;
 
         $this->builder = $this->builder->take($this->perPage)->skip($offset);
@@ -50,11 +56,27 @@ class PagingModifier extends BaseModifier {
     protected function fetchValuesFromData() {
         $sortIndex = $this->config->getPage();
 
-        if(empty($this->data[$sortIndex])) {
+        if(!isset($this->data[$sortIndex])) {
             return false;
         }
 
         return $this->data[$sortIndex];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPageNum()
+    {
+        return $this->pageNum;
+    }
+
+    /**
+     * @param mixed $pageNum
+     */
+    public function setPageNum($pageNum)
+    {
+        $this->pageNum = $pageNum;
     }
 
 }
