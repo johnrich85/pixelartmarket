@@ -5,9 +5,9 @@
 ## Installation
 
 - Clone Repo
-- Install dependencies via composer.
-- Run Migrations via artisan
-- Run module migrations via artisan (see http://sky.pingpong-labs.com/docs/2.0/testing#example-usage)
+- Install dependencies via composer (composer.phar install)
+- Run Migrations via artisan (php artisan migrate)
+- Run module migrations via artisan (php artisan module:migrate, see http://sky.pingpong-labs.com/docs/2.0/testing#example-usage)
 
 ## Tests
 
