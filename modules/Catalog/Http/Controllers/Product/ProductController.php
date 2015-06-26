@@ -36,7 +36,16 @@ class ProductController extends Controller {
 	 * @requestType GET
 	 * @route /{id}
 	 */
-	public function show() {
+	public function show($id = null) {
+
+        $product = $this->productRepo->find($id);
+
+        if($product == null) {
+            return $this->notFoundResponse();
+        }
+        else {
+            return $this->listResponse($product);
+        }
 
 	}
 

@@ -37,7 +37,16 @@ class ProductRepository implements ProductRepositoryInterface{
         return $query->get();
     }
 
+    /**
+     * @param $id
+     * @param array $columns
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|\Illuminate\Support\Collection|null|static
+     */
     public function find($id,$columns = array('*')) {
+        $model = $this->model
+            ->with('productType')
+            ->find($id,$columns);
 
+        return $model;
     }
 }
