@@ -47,8 +47,9 @@ class SortModifier extends BaseModifier {
      */
     protected function parseSortOrder() {
         $firstChar = substr($this->sortString,0,1);
+        $this->order = $this->symbolToOrder($firstChar);
+
         if($firstChar == '-' || $firstChar == '+') {
-            $this->order = $this->symbolToOrder($firstChar);
             $this->sortString = substr($this->sortString, 1);
         }
     }
@@ -81,7 +82,7 @@ class SortModifier extends BaseModifier {
     protected function fetchValuesFromData() {
         $sortIndex = $this->config->getSort();
 
-        if(empty($this->data[$sortIndex])) {
+        if(!isset($this->data[$sortIndex])) {
             return false;
         }
 
@@ -108,4 +109,38 @@ class SortModifier extends BaseModifier {
 
         return $this->builder;
     }
+
+    /**
+     * @return String
+     */
+    public function getSortString()
+    {
+        return $this->sortString;
+    }
+
+    /**
+     * @param String $sortString
+     */
+    public function setSortString($sortString)
+    {
+        $this->sortString = $sortString;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOrder()
+    {
+        return $this->order;
+    }
+
+    /**
+     * @param string $order
+     */
+    public function setOrder($order)
+    {
+        $this->order = $order;
+    }
+
+
 }

@@ -28,7 +28,6 @@
  - Rename the library (query modifier doesn't communicate the purpose)
  - Outstanding Unit tests:
    - Base class?
-   - Sort modifier
    - Input config
    - EloquentQueryModifier
 
