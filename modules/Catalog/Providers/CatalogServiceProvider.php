@@ -1,6 +1,8 @@
 <?php namespace Modules\Catalog\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\View;
 
 class CatalogServiceProvider extends ServiceProvider {
 
@@ -10,6 +12,13 @@ class CatalogServiceProvider extends ServiceProvider {
 	 * @var bool
 	 */
 	protected $defer = false;
+
+    public function boot() {
+        parent::boot();
+        Lang::addNamespace('catalog', __DIR__.'/Resources/lang');
+
+        View::addNamespace('catalog', __DIR__.'/Resources/views');
+    }
 
 	/**
 	 * Register the service provider.
